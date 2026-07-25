@@ -28,6 +28,10 @@ fasterq-dump --split-files -O fastq_files SRR19225587/SRR19225587.sra
 fasterq-dump --split-files -O fastq_files SRR19225588/SRR19225588.sra
 fasterq-dump --split-files -O fastq_files SRR19225589/SRR19225589.sra
 
+mkdir -p fastqc_reports
+
+fastqc *.fastq -o fastqc_reports
+
 fastp \
 -i SRR19225571_1.fastq \
 -I SRR19225571_2.fastq \
