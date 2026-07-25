@@ -1,5 +1,4 @@
 #!/bin/bash
-
 module load sra-toolkit/3.0.9
 
 prefetch SRR19225570 #Spleen
