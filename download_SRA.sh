@@ -1,6 +1,8 @@
 #!/bin/bash
 module load sra-toolkit/3.0.9
 module load fastp
+module load fastqc/0.12.1
+module load star/2.7.11b
 
 prefetch SRR19225570 #Spleen
 prefetch SRR19225571
@@ -81,4 +83,41 @@ fastp \
 -o SRR19225589_1_trimmed.fastq \
 -O SRR19225589_2_trimmed.fastq \
 --trim_poly_g
+
+mkdir -p trimmed_fastqc_reports
+
+fastqc SRR19225570_1_trimmed.fastq SRR19225570_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225571_1_trimmed.fastq SRR19225571_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225574_1_trimmed.fastq SRR19225574_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225575_1_trimmed.fastq SRR19225575_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225586_1_trimmed.fastq SRR19225586_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225587_1_trimmed.fastq SRR19225587_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225588_1_trimmed.fastq SRR19225588_2_trimmed.fastq -o trimmed_fastqc_reports
+
+fastqc SRR19225589_1_trimmed.fastq SRR19225589_2_trimmed.fastq -o trimmed_fastqc_reports
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
+gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
+gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
+
+mkdir -p STAR_index
+
+STAR \
+--runThreadN 8 \
+--runMode genomeGenerate \
+--genomeDir STAR_index \
+--genomeFastaFiles GCF_014441545.1_ROS_Cfam_1.0_genomic.fna \
+--sjdbGTFfile GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf \
+--sjdbOverhang 150
+
+
+
 
