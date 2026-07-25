@@ -108,10 +108,9 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_RO
 gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
 gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
-#Download 
+#Download the canine reference genome (FNA) and gene annotation (GTF) files required for STAR genome indexing.
 
 mkdir -p STAR_index
-
 STAR \
 --runThreadN 8 \
 --runMode genomeGenerate \
@@ -119,6 +118,7 @@ STAR \
 --genomeFastaFiles GCF_014441545.1_ROS_Cfam_1.0_genomic.fna \
 --sjdbGTFfile GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf \
 --sjdbOverhang 150
+# Generate the STAR genome index required to align RNA-seq reads, producing the BAM files used by Telescope for TE quantification.
 
 
 
