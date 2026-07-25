@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 module load kent_tools/486
 
 liftOver OV_13_dense.bed canFam3ToGCF_014441545.1.over.chain OV_ROS.bed OV_unmapped.bed
