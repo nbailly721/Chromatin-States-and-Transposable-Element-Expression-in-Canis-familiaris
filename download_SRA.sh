@@ -1,36 +1,38 @@
 #!/bin/bash
+
+#_Load required packages -------------------
 module load sra-toolkit/3.0.9
 module load fastp
 module load fastqc/0.12.1
 module load star/2.7.11b
 
+#_Download RNA-seq data -------------------
+
 prefetch SRR19225570 #Spleen
 prefetch SRR19225571
-
 prefetch SRR19225574 #Ovary
 prefetch SRR19225575
-
 prefetch SRR19225586 #Cerebrum
 prefetch SRR19225587
-
 prefetch SRR19225588 #Cerebellum
 prefetch SRR19225589
+#Download the raw RNA-seq datasets required for quality control, alignment, and TE quantification.
 
 fasterq-dump --split-files -O fastq_files SRR19225570/SRR19225570.sra
 fasterq-dump --split-files -O fastq_files SRR19225571/SRR19225571.sra
-
 fasterq-dump --split-files -O fastq_files SRR19225574/SRR19225574.sra
 fasterq-dump --split-files -O fastq_files SRR19225575/SRR19225575.sra
-
 fasterq-dump --split-files -O fastq_files SRR19225586/SRR19225586.sra
 fasterq-dump --split-files -O fastq_files SRR19225587/SRR19225587.sra
-
 fasterq-dump --split-files -O fastq_files SRR19225588/SRR19225588.sra
 fasterq-dump --split-files -O fastq_files SRR19225589/SRR19225589.sra
+#Convert downloaded SRA files into paired-end FASTQ files required for downstream analyses.
+
+#_Quality control -------------------
 
 mkdir -p fastqc_reports
-
 fastqc *.fastq -o fastqc_reports
+#Produce quality control reports on the FASTQ files to verify read quality and determine whether trimming is required. It was identified that certain samples had a poly-G tail that required trimming
 
 fastp \
 -i SRR19225571_1.fastq \
@@ -87,30 +89,26 @@ fastp \
 -o SRR19225589_1_trimmed.fastq \
 -O SRR19225589_2_trimmed.fastq \
 --trim_poly_g
+#The poly-G tail of all samples was trimmed for consistency.
 
 mkdir -p trimmed_fastqc_reports
-
 fastqc SRR19225570_1_trimmed.fastq SRR19225570_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225571_1_trimmed.fastq SRR19225571_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225574_1_trimmed.fastq SRR19225574_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225575_1_trimmed.fastq SRR19225575_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225586_1_trimmed.fastq SRR19225586_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225587_1_trimmed.fastq SRR19225587_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225588_1_trimmed.fastq SRR19225588_2_trimmed.fastq -o trimmed_fastqc_reports
-
 fastqc SRR19225589_1_trimmed.fastq SRR19225589_2_trimmed.fastq -o trimmed_fastqc_reports
+#Generate post-trimming quality control reports to verify that poly-G trimming improved read quality.
+
+#_STAR index generation -------------------
 
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
 gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
-
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
 gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
+#Download 
 
 mkdir -p STAR_index
 
