@@ -148,5 +148,90 @@ samtools index SRR19225588_Aligned.sortedByCoord.out.bam
 samtools index SRR19225589_Aligned.sortedByCoord.out.bam
 #Generate .bai files from .bam files to enable efficient access during downstream TE quantification with Telescope.
 
+#_Prepare Telescope TE annotation -------------------
 
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_rm.out.gz  
+#Download RepeatMasker annotation file containing transposable element coordinates for the canine reference genome. 
+#Necessary to generate the TE annotation file required by Telescope for TE quantification.
 
+awk '
+NR > 3 {
+    strand = ($9 == "C") ? "-" : "+";
+
+    split($11, arr, "/");
+    class = arr[1];
+    family = (arr[2] == "" ? arr[1] : arr[2]);
+
+    te_id = $10 "_" $15;
+
+    print $5 "\tRepeatMasker\texon\t" \
+          $6 "\t" $7 "\t.\t" strand "\t.\t" \
+          "gene_id \"" $10 "\"; transcript_id \"" te_id "\"; class_id \"" class "\"; family_id \"" family "\";"
+}
+' GCF_014441545.1_ROS_Cfam_1.0_rm.out > ROS_Cfam_TE.gtf
+# Convert RepeatMasker TE coordinates into a Telescope-compatible GTF file with transcript, class, and family annotations.
+
+#_TE quantification via Telescope -------------------
+
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate telescope39
+
+telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225570 \
+  --exp_tag SRR19225570 \
+  SRR19225570_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225571 \
+  --exp_tag SRR19225571 \
+  SRR19225571_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225574 \
+  --exp_tag SRR19225574 \
+  SRR19225574_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+  telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225575 \
+  --exp_tag SRR19225575 \
+  SRR19225575_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+  telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225586 \
+  --exp_tag SRR19225586 \
+  SRR19225586_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+  telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225587 \
+  --exp_tag SRR19225587 \
+  SRR19225587_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225588 \
+  --exp_tag SRR19225588 \
+  SRR19225588_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+
+  telescope assign \
+  --attribute transcript_id \
+  --outdir telescope_SRR19225589 \
+  --exp_tag SRR19225589 \
+  SRR19225589_Aligned.sortedByCoord.out.bam \
+  ROS_Cfam_TE.gtf
+  #Produce a transcript-level Telescope report (.tsv) for each RNA-seq sample. 
+  #Each report was imported into RStudio, where TE counts were merged across samples and normalized.
+
+  
