@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #_Load required packages -------------------
+
 module load sra-toolkit/3.0.9
 module load fastp
 module load fastqc/0.12.1
