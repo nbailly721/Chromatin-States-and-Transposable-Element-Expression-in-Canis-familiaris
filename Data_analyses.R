@@ -30,7 +30,6 @@ print(s_spleen_male )
 colnames(s_spleen_male)
 #Ensure that reports have the correct format for downstream analyses.
 
-# Keep only transcript and final_count
 s_spleen_male <- s_spleen_male[, c("transcript", "final_count")]
 s_spleen_female <- s_spleen_female[, c("transcript", "final_count")]
 s_ovary_1 <- s_ovary_1[, c("transcript", "final_count")]
@@ -76,7 +75,7 @@ sample_info <- data.frame(
              "cerebrum", "cerebrum",
              "cerebellum", "cerebellum")
 )
-#Label each sample with its respetive tissue type.
+#Label each sample with its respective tissue type.
 
 rownames(sample_info) <- colnames(count_matrix)
 #Match sample metadata to the count matrix columns.
