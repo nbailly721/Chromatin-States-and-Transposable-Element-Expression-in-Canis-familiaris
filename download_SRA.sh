@@ -5,6 +5,7 @@ module load sra-toolkit/3.0.9
 module load fastp
 module load fastqc/0.12.1
 module load star/2.7.11b
+module load  samtools/1.22.1
 
 #_Download RNA-seq data -------------------
 
@@ -120,6 +121,32 @@ STAR \
 --sjdbOverhang 150
 # Generate the STAR genome index required to align RNA-seq reads, producing the BAM files used by Telescope for TE quantification.
 
+#_RNA-seq alignment -------------------
+
+mkdir -p star_alignments
+
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225570_1_trimmed.fastq SRR19225570_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225570_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225571_1_trimmed.fastq SRR19225571_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225571_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225574_1_trimmed.fastq SRR19225574_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225574_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225575_1_trimmed.fastq SRR19225575_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225575_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225586_1_trimmed.fastq SRR19225586_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225586_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225587_1_trimmed.fastq SRR19225587_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225587_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225588_1_trimmed.fastq SRR19225588_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225588_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225589_1_trimmed.fastq SRR19225589_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225589_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+#Align trimmed RNA-seq reads to the canine reference genome, generating sorted BAM files for downstream TE quantification with Telescope.
+#The maximum number of multiple alignments per read was set at 500 because transposable elements are repetitive genomic sequences.
+
+#_BAM file indexing -------------------
+
+samtools index SRR19225570_Aligned.sortedByCoord.out.bam
+samtools index SRR19225571_Aligned.sortedByCoord.out.bam
+samtools index SRR19225574_Aligned.sortedByCoord.out.bam
+samtools index SRR19225575_Aligned.sortedByCoord.out.bam
+samtools index SRR19225586_Aligned.sortedByCoord.out.bam
+samtools index SRR19225587_Aligned.sortedByCoord.out.bam
+samtools index SRR19225588_Aligned.sortedByCoord.out.bam
+samtools index SRR19225589_Aligned.sortedByCoord.out.bam
+#Generate .bai files from .bam files to enable efficient access during downstream TE quantification with Telescope.
 
 
 
