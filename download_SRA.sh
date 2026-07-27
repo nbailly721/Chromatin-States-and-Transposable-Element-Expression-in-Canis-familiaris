@@ -32,6 +32,8 @@ fasterq-dump --split-files -O fastq_files SRR19225588/SRR19225588.sra
 fasterq-dump --split-files -O fastq_files SRR19225589/SRR19225589.sra
 #Convert downloaded SRA files into paired-end FASTQ files.
 
+cd fastq_files
+
 #_Quality control -------------------
 
 mkdir -p fastqc_reports
@@ -109,6 +111,8 @@ fastqc SRR19225588_1_trimmed.fastq SRR19225588_2_trimmed.fastq -o trimmed_fastqc
 fastqc SRR19225589_1_trimmed.fastq SRR19225589_2_trimmed.fastq -o trimmed_fastqc_reports
 #Generate post-trimming quality control reports to verify that poly-G trimming improved read quality.
 
+cd ..
+
 #_STAR index generation -------------------
 
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
@@ -133,27 +137,27 @@ STAR \
 
 mkdir -p star_alignments
 
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225570_1_trimmed.fastq SRR19225570_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225570_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225571_1_trimmed.fastq SRR19225571_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225571_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225574_1_trimmed.fastq SRR19225574_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225574_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225575_1_trimmed.fastq SRR19225575_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225575_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225586_1_trimmed.fastq SRR19225586_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225586_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225587_1_trimmed.fastq SRR19225587_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225587_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225588_1_trimmed.fastq SRR19225588_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225588_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
-STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn SRR19225589_1_trimmed.fastq SRR19225589_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225589_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225570_1_trimmed.fastq fastq_files/SRR19225570_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225570_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225571_1_trimmed.fastq fastq_files/SRR19225571_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225571_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225574_1_trimmed.fastq fastq_files/SRR19225574_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225574_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225575_1_trimmed.fastq fastq_files/SRR19225575_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225575_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225586_1_trimmed.fastq fastq_files/SRR19225586_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225586_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225587_1_trimmed.fastq fastq_files/SRR19225587_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225587_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225588_1_trimmed.fastq fastq_files/SRR19225588_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225588_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
+STAR --runThreadN 8 --genomeDir STAR_index --readFilesIn fastq_files/SRR19225589_1_trimmed.fastq fastq_files/SRR19225589_2_trimmed.fastq --outFileNamePrefix star_alignments/SRR19225589_ --outSAMtype BAM SortedByCoordinate --outFilterMultimapNmax 500
 #Align trimmed RNA-seq reads to the canine reference genome, generating sorted BAM files for downstream TE quantification with Telescope.
 #The maximum number of multiple alignments per read was set at 500 because transposable elements are repetitive genomic sequences.
 
 #_BAM file indexing -------------------
 
-samtools index SRR19225570_Aligned.sortedByCoord.out.bam
-samtools index SRR19225571_Aligned.sortedByCoord.out.bam
-samtools index SRR19225574_Aligned.sortedByCoord.out.bam
-samtools index SRR19225575_Aligned.sortedByCoord.out.bam
-samtools index SRR19225586_Aligned.sortedByCoord.out.bam
-samtools index SRR19225587_Aligned.sortedByCoord.out.bam
-samtools index SRR19225588_Aligned.sortedByCoord.out.bam
-samtools index SRR19225589_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225570_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225571_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225574_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225575_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225586_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225587_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225588_Aligned.sortedByCoord.out.bam
+samtools index star_alignments/SRR19225589_Aligned.sortedByCoord.out.bam
 #Generate .bai files from .bam files to enable efficient access during downstream TE quantification with Telescope.
 
 #_Prepare Telescope TE annotation -------------------
@@ -189,58 +193,61 @@ telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225570 \
   --exp_tag SRR19225570 \
-  SRR19225570_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225570_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
 telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225571 \
   --exp_tag SRR19225571 \
-  SRR19225571_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225571_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
 telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225574 \
   --exp_tag SRR19225574 \
-  SRR19225574_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225574_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
   telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225575 \
   --exp_tag SRR19225575 \
-  SRR19225575_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225575_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
   telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225586 \
   --exp_tag SRR19225586 \
-  SRR19225586_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225586_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
   telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225587 \
   --exp_tag SRR19225587 \
-  SRR19225587_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225587_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
 telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225588 \
   --exp_tag SRR19225588 \
-  SRR19225588_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225588_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
 
   telescope assign \
   --attribute transcript_id \
   --outdir telescope_SRR19225589 \
   --exp_tag SRR19225589 \
-  SRR19225589_Aligned.sortedByCoord.out.bam \
+  star_alignments/SRR19225589_Aligned.sortedByCoord.out.bam \
   ROS_Cfam_TE.gtf
   #Produce a transcript-level Telescope report (.tsv) for each RNA-seq sample. 
   #Each report was imported into RStudio, where TE counts were merged across samples and normalized.
 
+################################################
+Intersection.sh script follows
+################################################
   
