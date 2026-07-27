@@ -14,6 +14,9 @@ wget "https://raw.githubusercontent.com/snu-cdrc/dog-reference-epigenome/main/Da
 
 #_Coordinate conversion with liftOver -------------
 
+wget https://hgdownload.soe.ucsc.edu/goldenPath/canFam3/liftOver/canFam3ToGCF_014441545.1.over.chain.gz
+#Download the liftOver chain file required to convert chromatin state coordinates to the GCF_014441545.1_ROS_Cfam_1.0 reference genome. 
+
 liftOver OV_13_dense.bed canFam3ToGCF_014441545.1.over.chain OV_ROS.bed OV_unmapped.bed
 liftOver SP_13_dense.bed canFam3ToGCF_014441545.1.over.chain SP_ROS.bed SP_unmapped.bed
 liftOver CR_13_dense.bed canFam3ToGCF_014441545.1.over.chain CR_ROS.bed CR_unmapped.bed
