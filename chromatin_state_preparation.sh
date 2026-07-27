@@ -18,3 +18,8 @@ liftOver SP_13_dense.bed canFam3ToGCF_014441545.1.over.chain SP_ROS.bed SP_unmap
 liftOver CR_13_dense.bed canFam3ToGCF_014441545.1.over.chain CR_ROS.bed CR_unmapped.bed
 liftOver CL_13_dense.bed canFam3ToGCF_014441545.1.over.chain CL_ROS.bed CL_unmapped.bed
 #The .bed files were converted to the ROS_Cfam_1.0 genome assembly to ensure coordinate compatibility with the RNA-seq reference genome.
+
+################################################
+te_chromatin_intersection.sh script follows
+################################################
+  
