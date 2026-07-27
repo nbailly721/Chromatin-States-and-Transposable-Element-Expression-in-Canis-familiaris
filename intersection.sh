@@ -33,28 +33,28 @@ NR==FNR {
 }
 ' Telescope_counts.tsv TE_coordinates.bed > TE_expression.bed
 
-awk 'BEGIN{OFS="\t"}{print $1,$2,$3,$4,$6,$7,$8,$9,$10,$11,$12,$13}' TE_expression.bed > TE_expression_clean.bed
+awk 'BEGIN{OFS="\t"}{print $1,$2,$3,$4,$6,$7,$8,$9,$10,$11,$12,$13}' TE_expression.bed > TE_expression_merged.bed
 # Merge normalized TE expression values with TE genomic coordinates and retain only the columns required for downstream chromatin state overlap analysis.
 
 #_TE–chromatin state overlap analysis -------------------
 
 bedtools intersect \
--a TE_expression_clean.bed \
+-a TE_expression_merged.bed \
 -b OV_ROS.bed \
 -wa -wb > OV_intersect.tsv
 
 bedtools intersect \
--a TE_expression_clean.bed \
+-a TE_expression_merged.bed \
 -b SP_ROS.bed \
 -wa -wb > SP_intersect.tsv
 
 bedtools intersect \
--a TE_expression_clean.bed \
+-a TE_expression_merged.bed \
 -b CR_ROS.bed \
 -wa -wb > CR_intersect.tsv
 
 bedtools intersect \
--a TE_expression_clean.bed \
+-a TE_expression_merged.bed \
 -b CL_ROS.bed \
 -wa -wb > CL_intersect.tsv
 #The produced .tsv files contained the normalized TE counts associated with each chromatin state based on their overlapping genomic coordinates. They were exported into Rstudio for downstream analysis.
