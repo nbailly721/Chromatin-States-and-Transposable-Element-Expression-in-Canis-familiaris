@@ -1,4 +1,7 @@
 #!/bin/bash
+
+#_Load required packages -------------------
+
 module load bedtools
 
 awk -F'\t' '
