@@ -4,6 +4,8 @@
 
 module load bedtools
 
+#_Extract TE genomic coordinates -------------------
+
 awk -F'\t' '
 {
     split($9,a,";")
@@ -24,6 +26,8 @@ END{
 }
 ' ROS_Cfam_TE.gtf > TE_coordinates.bed
 #Retrieve genomic coordinates for each transposable element from the Telescope annotation to create a BED file for downstream overlap analyses.
+
+#_Produce TE expression BED file -------------------
 
 awk -F'\t' '
 NR==FNR {
