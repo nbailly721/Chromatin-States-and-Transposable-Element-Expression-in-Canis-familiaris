@@ -248,6 +248,6 @@ telescope assign \
   #Each report was imported into RStudio, where TE counts were merged across samples and normalized.
 
 ################################################
-Intersection.sh script follows
+chromatin_state_preparation.sh script follows
 ################################################
   
