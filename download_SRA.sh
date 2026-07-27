@@ -20,6 +20,8 @@ prefetch SRR19225588 #Cerebellum
 prefetch SRR19225589
 #Download the raw RNA-seq datasets required for quality control, alignment, and TE quantification.
 
+mkdir -p fastq_files
+
 fasterq-dump --split-files -O fastq_files SRR19225570/SRR19225570.sra
 fasterq-dump --split-files -O fastq_files SRR19225571/SRR19225571.sra
 fasterq-dump --split-files -O fastq_files SRR19225574/SRR19225574.sra
@@ -28,13 +30,15 @@ fasterq-dump --split-files -O fastq_files SRR19225586/SRR19225586.sra
 fasterq-dump --split-files -O fastq_files SRR19225587/SRR19225587.sra
 fasterq-dump --split-files -O fastq_files SRR19225588/SRR19225588.sra
 fasterq-dump --split-files -O fastq_files SRR19225589/SRR19225589.sra
-#Convert downloaded SRA files into paired-end FASTQ files required for downstream analyses.
+#Convert downloaded SRA files into paired-end FASTQ files.
 
 #_Quality control -------------------
 
 mkdir -p fastqc_reports
+
 fastqc *.fastq -o fastqc_reports
-#Produce quality control reports on the FASTQ files to verify read quality and determine whether trimming is required. It was identified that certain samples had a poly-G tail that required trimming
+#Produce quality control reports on the FASTQ files to verify read quality and determine whether trimming is required. 
+#It was identified that certain samples had a poly-G tail that required trimming
 
 fastp \
 -i SRR19225571_1.fastq \
@@ -94,6 +98,7 @@ fastp \
 #The poly-G tail of all samples was trimmed for consistency.
 
 mkdir -p trimmed_fastqc_reports
+
 fastqc SRR19225570_1_trimmed.fastq SRR19225570_2_trimmed.fastq -o trimmed_fastqc_reports
 fastqc SRR19225571_1_trimmed.fastq SRR19225571_2_trimmed.fastq -o trimmed_fastqc_reports
 fastqc SRR19225574_1_trimmed.fastq SRR19225574_2_trimmed.fastq -o trimmed_fastqc_reports
@@ -110,9 +115,10 @@ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_RO
 gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.fna.gz
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
 gunzip GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf.gz
-#Download the canine reference genome (FNA) and gene annotation (GTF) files required for STAR genome indexing.
+#Download the canine reference genome (FNA) and gene annotation (GTF) files required for producing the STAR index.
 
 mkdir -p STAR_index
+
 STAR \
 --runThreadN 8 \
 --runMode genomeGenerate \
@@ -121,6 +127,7 @@ STAR \
 --sjdbGTFfile GCF_014441545.1_ROS_Cfam_1.0_genomic.gtf \
 --sjdbOverhang 150
 # Generate the STAR genome index required to align RNA-seq reads, producing the BAM files used by Telescope for TE quantification.
+#The splice-junction overhang was set to 150 because the RNA-seq reads were 151 bp long.
 
 #_RNA-seq alignment -------------------
 
@@ -152,6 +159,7 @@ samtools index SRR19225589_Aligned.sortedByCoord.out.bam
 #_Prepare Telescope TE annotation -------------------
 
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/441/545/GCF_014441545.1_ROS_Cfam_1.0/GCF_014441545.1_ROS_Cfam_1.0_rm.out.gz  
+gunzip GCF_014441545.1_ROS_Cfam_1.0_rm.out.gz
 #Download RepeatMasker annotation file containing transposable element coordinates for the canine reference genome. 
 #Necessary to generate the TE annotation file required by Telescope for TE quantification.
 
@@ -170,7 +178,7 @@ NR > 3 {
           "gene_id \"" $10 "\"; transcript_id \"" te_id "\"; class_id \"" class "\"; family_id \"" family "\";"
 }
 ' GCF_014441545.1_ROS_Cfam_1.0_rm.out > ROS_Cfam_TE.gtf
-# Convert RepeatMasker TE coordinates into a Telescope-compatible GTF file with transcript, class, and family annotations.
+# Convert RepeatMasker TE coordinates into a Telescope-compatible GTF file with transcript, class, and family information.
 
 #_TE quantification via Telescope -------------------
 
