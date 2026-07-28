@@ -24,6 +24,6 @@ This repository contains the computational workflow used to investigate the asso
 
 2. Eight RNA-seq datasets from canine ovary, spleen, cerebrum, and cerebellum. Two biological replicates were analyzed for each tissue. Except for the ovary, each tissue included one male and one female sample.
 
-3. 
+3. Canis familiaris reference genome FNA file, gene annotation GTF file, and RepeatMasker annotation file
 
 **Workflow**
