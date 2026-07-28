@@ -20,6 +20,10 @@ This repository contains the computational workflow used to investigate the asso
 
 **Datasets Used**
 
-1.
+1. Four tissue-specific .bed files containing the genomic coordinates of 13 chromatin states in canine ovary, spleen, cerebrum, and cerebellum.
+
+2. Eight RNA-seq datasets from canine ovary, spleen, cerebrum, and cerebellum. Two biological replicates were analyzed for each tissue. Except for the ovary, each tissue included one male and one female sample.
+
+3.
 
 **Workflow**
