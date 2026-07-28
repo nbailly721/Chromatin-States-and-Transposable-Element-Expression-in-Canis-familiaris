@@ -29,6 +29,16 @@ This repository contains the computational workflow used to investigate the asso
 
 **Workflow**
 
+1.Run 'te_quantification.sh' to download the RNA-seq datasets, align reads to the reference genome, and quantify Transposable Element expression across the four tissues.
+
+2.Run`chromatin_state_preparation.sh` to download the chromatin state BED files and convert their genomic coordinates to the assembly version of the reference genome.
+
+3.Run `te_expression_analysis.R` to merge and normalize the TE counts across samples. The table containing the normalized and combined counts are exported as `Telescope_counts.tsv`.
+
+4.Run `te_chromatin_intersection.sh' to intersect the genomic coordinates of the chromatin states with those of the normalized TE counts and produce tissue-specific overlap tables.
+
+5.Run `te_expression_analysis.R` again to perform the statistical analyses on the tissue-specific overlap tables and produce relevant visualizations.
+
 **References**
 
 1.Gene Expression Omnibus (2023). Integrated mapping of the dog genome. National Center for Biotechnology Information. Available at: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE203107
