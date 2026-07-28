@@ -20,10 +20,21 @@ This repository contains the computational workflow used to investigate the asso
 
 **Datasets Used**
 
-1. Four tissue-specific .bed files containing the genomic coordinates of 13 chromatin states in canine ovary, spleen, cerebrum, and cerebellum.
+1. Four tissue-specific .bed files containing the genomic coordinates of 13 chromatin states in canine ovary, spleen, cerebrum, and cerebellum (Son et al., 2025).
 
-2. Eight RNA-seq datasets from canine ovary, spleen, cerebrum, and cerebellum. Two biological replicates were analyzed for each tissue. Except for the ovary, each tissue included one male and one female sample.
+2. Eight RNA-seq datasets from canine ovary, spleen, cerebrum, and cerebellum. Two biological replicates were analyzed for each tissue. Except for the ovary, each tissue included one male and one female sample (Gene Expression Omnibus, 2023).
 
-3. Canis familiaris reference genome FNA file, gene annotation GTF file, and RepeatMasker annotation file
+3. Canis familiaris reference genome FNA file, gene annotation GTF file, and RepeatMasker annotation file (NCBI RefSeq Genome Database).
 
 **Workflow**
+
+**References**
+
+1.Gene Expression Omnibus (2023). Integrated mapping of the dog genome. National Center for Biotechnology Information. Available at: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE203107
+
+2.NCBI RefSeq Genome Database. Canis lupus familiaris genome assembly. ROS_Cfam_1.0 (GCF_014441545.1). National Center for Biotechnology Information. 
+
+3.Son, K.H. et al. (2025) EpiC Dog: Epigenome Catalog of the Dog. GitHub repository. Available at: https://github.com/snu-cdrc/dog-reference-epigenome
+
+
+
