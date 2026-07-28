@@ -15,7 +15,9 @@ This repository contains the computational workflow used to investigate the asso
   -te_chromatin_intersection.sh: Bash script used to associate normalized TE counts with chromatin states based on overlapping genomic coordinates.
   
   -te_expression_analysis.R: R script used to (1) normalize TE counts prior to chromatin state integration and (2) perform downstream statistical analyses and visualizations of TE expression across chromatin states.
-  
+
+-"intersection_files" folder: Contains the tissue-specific TE–chromatin state overlap tables used for the downstream statistical analyses.
+
 **Datasets Used**
 
 
