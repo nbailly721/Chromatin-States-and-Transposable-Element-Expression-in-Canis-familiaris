@@ -6,7 +6,7 @@ This repository contains the computational workflow used to investigate the asso
 
 **Repository Structure**
 
-"scripts" folder:
+-"scripts" folder:
   
   -te_quantification.sh: Bash script used to calculate the TE counts in every tissue and their associated genomic coordinates.
   
@@ -16,15 +16,15 @@ This repository contains the computational workflow used to investigate the asso
   
   -te_expression_analysis.R: R script used to (1) normalize TE counts prior to chromatin state integration and (2) perform downstream statistical analyses and visualizations of TE expression across chromatin states.
 
-"intersection_files" folder: Contains the tissue-specific TE–chromatin state overlap tables used for the downstream statistical analyses.
+-"intersection_files" folder: Contains the tissue-specific TE–chromatin state overlap tables used for the downstream statistical analyses.
 
 **Datasets Used**
 
-1. Four tissue-specific .bed files containing the genomic coordinates of 13 chromatin states in canine ovary, spleen, cerebrum, and cerebellum (Son et al., 2025).
+1.Four tissue-specific .bed files containing the genomic coordinates of 13 chromatin states in canine ovary, spleen, cerebrum, and cerebellum (Son et al., 2025).
 
-2. Eight RNA-seq datasets from canine ovary, spleen, cerebrum, and cerebellum. Two biological replicates were analyzed for each tissue. Except for the ovary, each tissue included one male and one female sample (Gene Expression Omnibus, 2023).
+2.Eight RNA-seq datasets from canine ovary, spleen, cerebrum, and cerebellum. Two biological replicates were analyzed for each tissue. Except for the ovary, each tissue included one male and one female sample (Gene Expression Omnibus, 2023).
 
-3. Canis familiaris reference genome FNA file, gene annotation GTF file, and RepeatMasker annotation file (NCBI RefSeq Genome Database).
+3.Canis familiaris reference genome FNA file, gene annotation GTF file, and RepeatMasker annotation file (NCBI RefSeq Genome Database).
 
 **Workflow**
 
