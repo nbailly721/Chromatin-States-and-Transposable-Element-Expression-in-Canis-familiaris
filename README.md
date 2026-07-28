@@ -6,8 +6,9 @@ This repository contains the computational workflow used to investigate the asso
 
 **Repository Structure**
 
-
-
+- "scripts" folder:
+  -
+  
 **Datasets Used**
 
 **Workflow**
