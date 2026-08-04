@@ -361,62 +361,6 @@ pheatmap(
 )
 #Generate a heatmap to visualize tissue-specific patterns of TE expression across chromatin states. 
 
-##__Within-state variability ----------
-
-ovary_summary <- ovary %>%
-  group_by(State) %>%
-  summarise(
-    Mean = mean(Mean_Expression),
-    Median = median(Mean_Expression),
-    Min = min(Mean_Expression),
-    Max = max(Mean_Expression),
-    SD = sd(Mean_Expression),
-    n = n()
-  )
-#Calculate summary statistics to identify within-state variability in TE expression for each chromatin state in the ovary.
-
-spleen_summary <- spleen %>%
-  group_by(State) %>%
-  summarise(
-    Mean = mean(Mean_Expression),
-    Median = median(Mean_Expression),
-    Min = min(Mean_Expression),
-    Max = max(Mean_Expression),
-    SD = sd(Mean_Expression),
-    n = n()
-  )
-#Calculate summary statistics to identify within-state variability in TE expression for each chromatin state in the spleen
-
-cerebrum_summary <- cerebrum %>%
-  group_by(State) %>%
-  summarise(
-    Mean = mean(Mean_Expression),
-    Median = median(Mean_Expression),
-    Min = min(Mean_Expression),
-    Max = max(Mean_Expression),
-    SD = sd(Mean_Expression),
-    n = n()
-  )
-#Calculate summary statistics to identify within-state variability in TE expression for each chromatin state in the cerebrum
-
-cerebellum_summary <- cerebellum %>%
-  group_by(State) %>%
-  summarise(
-    Mean = mean(Mean_Expression),
-    Median = median(Mean_Expression),
-    Min = min(Mean_Expression),
-    Max = max(Mean_Expression),
-    SD = sd(Mean_Expression),
-    n = n()
-  )
-#Calculate summary statistics to identify within-state variability in TE expression for each chromatin state in the cerebellum
-
-write.csv(ovary_summary, "Ovary_summary.csv", row.names = FALSE)
-write.csv(spleen_summary, "Spleen_summary.csv", row.names = FALSE)
-write.csv(cerebrum_summary, "Cerebrum_summary.csv", row.names = FALSE)
-write.csv(cerebellum_summary, "Cerebellum_summary.csv", row.names = FALSE)
-#Export the tables containing the summary statistics for a better visualization
-
 #_Statistical tests --------------
 
 ##__Kruskal–Wallis tests ----------
