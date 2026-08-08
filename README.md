@@ -19,9 +19,7 @@ This repository contains the computational workflow used to investigate the asso
 - **intersection_files/** folder
    - Contains the tissue-specific TE–chromatin state overlap tables used for the downstream statistical analyses.
      
-- **environment_telescope.yml** file
-  
-  -Contains the Conda environment used for Telescope-based TE quantification.
+- **environment_telescope.yml** file: Contains the Conda environment used for Telescope-based TE quantification.
 
 **Datasets Used**
 
